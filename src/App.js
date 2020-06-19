@@ -47,11 +47,14 @@ const initialFormValues = {
     sausage: false,
     extraCheese: false,
     pineapple: false
-  }
+  },
+  specialInstructions: ''
 }
+const initialOrderList = () => []
 
 const App = () => {
   const [formValues, setFormValues] = useState(initialFormValues)
+  const [orderList, setOrderList] = useState(initialOrderList)
 
   const onTextChange = evt => {
     const { name, value } = evt.target
@@ -72,6 +75,20 @@ const App = () => {
     })
   }
 
+  const onSubmit = evt => {
+    evt.preventDefault()
+
+    // Do some validation
+
+
+    // setOrderList(['lol'])
+    setOrderList([
+      ...orderList,
+      formValues
+    ])
+    setFormValues(initialFormValues)
+  }
+
   return (
     <Router>
       <GeneralStylesDiv>
@@ -90,7 +107,7 @@ const App = () => {
           <Switch>
           <Route path="/pizza" render={() => (
             <BodyDiv>
-              <PizzaForm values={formValues} handlers={[onTextChange, onChecked]}/>
+              <PizzaForm values={formValues} handlers={[onTextChange, onChecked, onSubmit]}/>
             </BodyDiv>
           )} />
           <Route path="/" render={() => (

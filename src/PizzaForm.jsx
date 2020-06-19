@@ -14,11 +14,19 @@ const StyledForm = styled.form`
   align-items: center;
   flex-wrap: wrap;
 `
+const SpecialInstructionsContainer = styled.div`
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+`
+const SpecialInstructions = styled.textarea`
+  resize: none;
+`
 const SubmitButtonContainer = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
-  flex-basis: 100%;
+flex-basis: 100%;
 `
 const SubmitButton = styled.input`
   padding: 1rem 2rem;
@@ -26,12 +34,12 @@ const SubmitButton = styled.input`
 `
 
 const PizzaForm = (props) => {
-  const { name, size, toppings } = props.values
+  const { name, size, toppings, specialInstructions } = props.values
   const { pepperoni, sausage, extraCheese, pineapple } = toppings
-  const [ onTextChange, onChecked ] = props.handlers
+  const [ onTextChange, onChecked, onSubmit ] = props.handlers
 
   return (
-    <StyledForm>
+    <StyledForm onSubmit={onSubmit}>
       <label>Name:&nbsp;&nbsp;<input type="text" name="name" value={name} placeholder="Please enter your name..." onChange={onTextChange} / ></label>
 
       <label>Size:&nbsp;&nbsp;
@@ -51,6 +59,18 @@ const PizzaForm = (props) => {
         <label><input name="extraCheese" type="checkbox" checked={extraCheese} onChange={onChecked} />Extra Cheese</label><br />
         <label><input name="pineapple" type="checkbox" checked={pineapple} onChange={onChecked} />Pineapple</label>
       </label>
+
+      <SpecialInstructionsContainer>
+        <label>Special Instructions:<br />
+          <SpecialInstructions
+          name="specialInstructions"
+          placeholder="Place special order instructions here..."
+          value={specialInstructions} 
+          onChange={onTextChange}
+          rows="7"
+          cols="50" />
+        </label>
+      </SpecialInstructionsContainer>
 
       <SubmitButtonContainer>
         <SubmitButton type="submit"/>
