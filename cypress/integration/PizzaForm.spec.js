@@ -15,5 +15,9 @@ describe('Test basic I/O', () => {
       .should('have.value', 'John')
   })
 
+  it('selects a size', () => {
+    cy.get('[name=size]')
+      .select('Small')
+  })
 
 })
