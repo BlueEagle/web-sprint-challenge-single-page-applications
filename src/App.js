@@ -55,6 +55,7 @@ const initialFormValues = {
 const initialOrderList = []
 const initialErrorList = {
   name: '',
+  size: '',
   specialInstructions: ''
 }
 

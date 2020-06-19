@@ -34,8 +34,6 @@ const SubmitButton = styled.input`
 `
 const ErrorDisplay = styled.div`
   width: 80%;
-  border: 1px solid red;
-  background: tan;
   color: red;
   padding: .8rem 1rem;
 `
@@ -44,15 +42,15 @@ const PizzaForm = (props) => {
   const { name, size, toppings, specialInstructions } = props.values
   const { pepperoni, sausage, extraCheese, pineapple } = toppings
   const [ onTextChange, onChecked, onSubmit ] = props.handlers
-  const { errorList } = props.errors
+  const { errors } = props
 
   return (
     <StyledForm onSubmit={onSubmit}>
-      {}
-      {/* { errorList === [] &&
-      <ErrorDisplay>
-        errors
-      </ErrorDisplay>} */}
+      <ErrorDisplay className="errors">
+        <div>{errors.name}</div>
+        <div>{errors.size}</div>
+        <div>{errors.specialInstructions}</div>
+      </ErrorDisplay>
 
       <label>Name:&nbsp;&nbsp;<input type="text" name="name" value={name} placeholder="Please enter your name..." onChange={onTextChange} / ></label>
 
