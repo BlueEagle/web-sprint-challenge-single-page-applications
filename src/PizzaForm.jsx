@@ -43,6 +43,7 @@ const PizzaForm = (props) => {
   const { pepperoni, sausage, extraCheese, pineapple } = toppings
   const [ onTextChange, onChecked, onSubmit ] = props.handlers
   const { errors } = props
+  const { disabled } = props
 
   return (
     <StyledForm onSubmit={onSubmit}>
@@ -85,7 +86,7 @@ const PizzaForm = (props) => {
       </SpecialInstructionsContainer>
 
       <SubmitButtonContainer>
-        <SubmitButton type="submit"/>
+        <SubmitButton type="submit" disabled={disabled} />
       </SubmitButtonContainer>
     </StyledForm>
   )

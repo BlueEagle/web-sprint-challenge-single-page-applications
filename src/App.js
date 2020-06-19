@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import PizzaForm from './PizzaForm'
@@ -30,11 +30,14 @@ const RightNav = styled.div`
   align-items: center;
 `
 const BodyDiv = styled.div`
+  box-sizing: border-box;
   height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  overflow-y: auto;
+  padding: 2rem 0;
 
   a {
     border: 1px solid black;
@@ -64,6 +67,7 @@ const App = () => {
   const [formValues, setFormValues] = useState(initialFormValues)
   const [orderList, setOrderList] = useState(initialOrderList)
   const [errorList, setErrorList] = useState(initialErrorList)
+  const [disabled, setDisabled] = useState(true)
 
   const onTextChange = evt => {
     const { name, value } = evt.target
@@ -111,6 +115,12 @@ const App = () => {
     setFormValues(initialFormValues)
   }
 
+  useEffect(() => {
+    schema.isValid(formValues).then(valid => {
+      setDisabled(!valid)
+    })
+  }, [formValues])
+
   return (
     <Router>
       <GeneralStylesDiv>
@@ -139,7 +149,7 @@ const App = () => {
           )} />
           <Route path="/pizza" render={() => (
             <BodyDiv>
-              <PizzaForm values={formValues} handlers={[onTextChange, onChecked, onSubmit]} errors={errorList} />
+              <PizzaForm values={formValues} handlers={[onTextChange, onChecked, onSubmit]} errors={errorList} disabled={disabled} />
             </BodyDiv>
           )} />
           <Route path="/" render={() => (
