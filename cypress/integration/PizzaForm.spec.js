@@ -20,4 +20,17 @@ describe('Test basic I/O', () => {
       .select('Small')
   })
 
+  it('adds toppings', () => {
+    cy.get('[name=pepperoni]')
+      .click()
+
+    cy.get('[name=sausage]')
+      .click()
+  })
+
+  it('submits', () => {
+    cy.get('[type=submit]')
+      .click()
+  })
+
 })
