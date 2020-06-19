@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import PizzaForm from './PizzaForm'
@@ -39,7 +39,39 @@ const BodyDiv = styled.div`
   }
 `
 
+const initialFormValues = {
+  name: '',
+  size: '',
+  toppings: {
+    pepperoni: false,
+    sausage: false,
+    extraCheese: false,
+    pineapple: false
+  }
+}
+
 const App = () => {
+  const [formValues, setFormValues] = useState(initialFormValues)
+
+  const onTextChange = evt => {
+    const { name, value } = evt.target
+    setFormValues({
+      ...formValues,
+      [name]: value
+    })
+  }
+
+  const onChecked = evt => {
+    const { name, checked } = evt.target
+    setFormValues({
+      ...formValues,
+      toppings: {
+        ...formValues.toppings,
+        [name]: checked
+      }
+    })
+  }
+
   return (
     <Router>
       <GeneralStylesDiv>
@@ -58,7 +90,7 @@ const App = () => {
           <Switch>
           <Route path="/pizza" render={() => (
             <BodyDiv>
-              <PizzaForm />
+              <PizzaForm values={formValues} handlers={[onTextChange, onChecked]}/>
             </BodyDiv>
           )} />
           <Route path="/" render={() => (

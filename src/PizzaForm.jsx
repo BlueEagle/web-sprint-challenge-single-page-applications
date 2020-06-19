@@ -26,13 +26,16 @@ const SubmitButton = styled.input`
 `
 
 const PizzaForm = (props) => {
+  const { name, size, toppings } = props.values
+  const { pepperoni, sausage, extraCheese, pineapple } = toppings
+  const [ onTextChange, onChecked ] = props.handlers
 
   return (
     <StyledForm>
-      <label>Name:&nbsp;&nbsp;<input type="text" name="name" value="" placeholder="Please enter your name..."/ ></label>
+      <label>Name:&nbsp;&nbsp;<input type="text" name="name" value={name} placeholder="Please enter your name..." onChange={onTextChange} / ></label>
 
       <label>Size:&nbsp;&nbsp;
-        <select name="pizzaSize">
+        <select name="size" value={size} onChange={onTextChange}>
           <option value="">Please select a size</option>
           <option value="smallest">Smallest!</option>
           <option value="small">Small</option>
@@ -43,10 +46,10 @@ const PizzaForm = (props) => {
       </label>
 
       <label>Toppings:<br />
-        <label><input name="pepperoni" type="checkbox" />Pepperoni</label><br />
-        <label><input name="sausage" type="checkbox" />Sausage</label><br />
-        <label><input name="extra-cheese" type="checkbox" />Extra Cheese</label><br />
-        <label><input name="pineapple" type="checkbox" />Pineapple</label>
+        <label><input name="pepperoni" type="checkbox" checked={pepperoni} onChange={onChecked} />Pepperoni</label><br />
+        <label><input name="sausage" type="checkbox" checked={sausage} onChange={onChecked} />Sausage</label><br />
+        <label><input name="extraCheese" type="checkbox" checked={extraCheese} onChange={onChecked} />Extra Cheese</label><br />
+        <label><input name="pineapple" type="checkbox" checked={pineapple} onChange={onChecked} />Pineapple</label>
       </label>
 
       <SubmitButtonContainer>
