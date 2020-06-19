@@ -134,7 +134,7 @@ const App = () => {
           <Route path="/" render={() => (
             <BodyDiv>
               <p>Come enjoy some pizza with us!</p>
-              <Link to="/pizza">Pizza!</Link>
+              <Link to="/pizza" name="pizzaButton">Pizza!</Link>
             </BodyDiv>
           )} />
           </Switch>
