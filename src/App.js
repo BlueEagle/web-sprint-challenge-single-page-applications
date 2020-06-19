@@ -5,8 +5,9 @@ import PizzaForm from './PizzaForm'
 import Order from './Order'
 import * as Yup from 'yup'
 import schema from './schema'
+import Axios from 'axios'
 
-
+const api_url = 'https://reqres.in/api/users'
 const GeneralStylesDiv = styled.div`
   a {
     text-decoration: none;
@@ -108,11 +109,20 @@ const App = () => {
   const onSubmit = evt => {
     evt.preventDefault()
 
-    setOrderList([
-      ...orderList,
-      formValues
-    ])
+    postOrder(formValues) // Network post req
+
     setFormValues(initialFormValues)
+  }
+
+  const postOrder = order => {
+    Axios.post(api_url, order)
+      .then(res => {
+        setOrderList([...orderList, res.data])
+        console.log(`Order sent for ${res.data.name}`)
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   useEffect(() => {
@@ -142,7 +152,7 @@ const App = () => {
             <BodyDiv>
               {
                 orderList.map(order => (
-                  <Order order={order} />
+                  <Order key={order.id} order={order} />
                 ))
               }
             </BodyDiv>

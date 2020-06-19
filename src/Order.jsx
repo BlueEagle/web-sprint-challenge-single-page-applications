@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const getToppingsString = (toppings) => {
-  console.log('converting toppings data')
   let toppingRequests = []
   let toppingValues = []
 
