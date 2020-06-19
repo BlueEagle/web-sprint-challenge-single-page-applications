@@ -1,6 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+import PizzaForm from './PizzaForm'
 
 
 const GeneralStylesDiv = styled.div`
@@ -54,10 +55,19 @@ const App = () => {
             </RightNav>
           </StyledNav>
 
-          <BodyDiv>
-            <p>Come enjoy some pizza with us!</p>
-            <Link to="/pizza">Pizza!</Link>
-          </BodyDiv>
+          <Switch>
+          <Route path="/pizza" render={() => (
+            <BodyDiv>
+              <PizzaForm />
+            </BodyDiv>
+          )} />
+          <Route path="/" render={() => (
+            <BodyDiv>
+              <p>Come enjoy some pizza with us!</p>
+              <Link to="/pizza">Pizza!</Link>
+            </BodyDiv>
+          )} />
+          </Switch>
 
 
         </header>
