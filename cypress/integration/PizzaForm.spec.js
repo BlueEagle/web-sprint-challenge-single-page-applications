@@ -33,4 +33,9 @@ describe('Test basic I/O', () => {
       .click()
   })
 
+  // it('opens orders page for viewing', () => {
+  //   cy.get('[name=ordersButton]')
+  //     .click()
+  // })
+
 })

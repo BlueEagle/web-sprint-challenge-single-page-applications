@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import PizzaForm from './PizzaForm'
+import Order from './Order'
 import * as Yup from 'yup'
 import schema from './schema'
 
@@ -121,11 +122,21 @@ const App = () => {
             </div>
             <RightNav>
               <Link to="/">Home</Link>
-              <Link to="/pizza">Pizza</Link>
+              <Link to="/pizza" name="pizzaButton">Pizza</Link>
+              <Link to="/orders" name="ordersButton">Orders</Link>
             </RightNav>
           </StyledNav>
 
           <Switch>
+          <Route path="/orders" render={() => (
+            <BodyDiv>
+              {
+                orderList.map(order => (
+                  <Order order={order} />
+                ))
+              }
+            </BodyDiv>
+          )} />
           <Route path="/pizza" render={() => (
             <BodyDiv>
               <PizzaForm values={formValues} handlers={[onTextChange, onChecked, onSubmit]} errors={errorList} />
@@ -134,7 +145,7 @@ const App = () => {
           <Route path="/" render={() => (
             <BodyDiv>
               <p>Come enjoy some pizza with us!</p>
-              <Link to="/pizza" name="pizzaButton">Pizza!</Link>
+              <Link to="/pizza">Pizza!</Link>
             </BodyDiv>
           )} />
           </Switch>
