@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import PizzaForm from './PizzaForm'
+import * as Yup from 'yup'
+import schema from './schema'
 
 
 const GeneralStylesDiv = styled.div`
@@ -50,14 +52,36 @@ const initialFormValues = {
   },
   specialInstructions: ''
 }
-const initialOrderList = () => []
+const initialOrderList = []
+const initialErrorList = {
+  name: '',
+  specialInstructions: ''
+}
 
 const App = () => {
   const [formValues, setFormValues] = useState(initialFormValues)
   const [orderList, setOrderList] = useState(initialOrderList)
+  const [errorList, setErrorList] = useState(initialErrorList)
 
   const onTextChange = evt => {
     const { name, value } = evt.target
+
+    Yup
+      .reach(schema, name)
+      .validate(value)
+      .then(() => {
+        setErrorList({
+          ...errorList,
+          [name]: ''
+        })
+      })
+      .catch(err => {
+        setErrorList({
+          ...errorList,
+          [name]: err.errors[0]
+        })
+      })
+
     setFormValues({
       ...formValues,
       [name]: value
@@ -78,10 +102,6 @@ const App = () => {
   const onSubmit = evt => {
     evt.preventDefault()
 
-    // Do some validation
-
-
-    // setOrderList(['lol'])
     setOrderList([
       ...orderList,
       formValues
@@ -107,7 +127,7 @@ const App = () => {
           <Switch>
           <Route path="/pizza" render={() => (
             <BodyDiv>
-              <PizzaForm values={formValues} handlers={[onTextChange, onChecked, onSubmit]}/>
+              <PizzaForm values={formValues} handlers={[onTextChange, onChecked, onSubmit]} errors={errorList} />
             </BodyDiv>
           )} />
           <Route path="/" render={() => (
